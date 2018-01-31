@@ -28,17 +28,7 @@ class graph {
 		vertices[x].push_back(y);
 	}
 
-	void process_node(int node) {
-		std::cout << "Processing node " << node << std::endl;
-	}
-
-	void process_edge(std::tuple<int, int> pair) {
-		int x, y;
-		std::tie(x, y) = pair;
-		std::cout << x << "->" << y << std::endl;
-	}
-
-	void BFS(int node = 1) {
+	void bfs(int node = 0) {
 		std::vector<edge_state> state(n_vertices);
 		std::queue<int> q;
 		std::list<int>::iterator it, end;
@@ -68,10 +58,43 @@ class graph {
 		}
 	}
 
+	void dfs(int node = 0) {
+		std::vector<int> state(n_vertices);
+		dfs_internal(node, state);
+	}
+
 	private:
 	std::list<int> *vertices;
 	int n_edges;
 	int n_vertices;
+
+	void process_node(int node) {
+		std::cout << "Processing node " << node << std::endl;
+	}
+
+	void process_edge(std::tuple<int, int> pair) {
+		int x, y;
+		std::tie(x, y) = pair;
+		std::cout << x << "->" << y << std::endl;
+	}
+
+	void dfs_internal(int node, std::vector<int>& state) {
+		std::list<int>::iterator it, end;
+
+		process_node(node);
+		state[node] = DISCOVERED;
+
+		it = vertices[node].begin();
+		end = vertices[node].end();
+
+		while (it != end) {
+			if (state[*it] != DISCOVERED)
+				dfs_internal(*it, state);
+			it++;
+		}
+
+		state[node] = PROCESSED;
+	}
 };
 
 int main(void) {
@@ -85,5 +108,8 @@ int main(void) {
 	g.insert_edge(std::make_tuple(5, 9));
 	g.insert_edge(std::make_tuple(5, 6));
 	g.insert_edge(std::make_tuple(1, 8));
-	g.BFS(0);
+	std::cout << "BFS Traversal" << std::endl;
+	g.bfs(0);
+	std::cout << "DFS Traversal" << std::endl;
+	g.dfs(0);
 }
