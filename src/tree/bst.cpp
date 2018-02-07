@@ -51,6 +51,7 @@ class bst : public tree {
 	void insert_elem(int e) override {
 		tree_node *node = root, *parent = NULL;
 
+		std::cout << "Insert element " << e << std::endl;
 		while (node) {
 			parent = node;
 
@@ -74,10 +75,75 @@ class bst : public tree {
 	}
 
 	void traverse_tree_inorder() const override {
+		std::cout << "Inorder Traversal\n";
 		traverse_tree_inorder_int(root);
+		std::cout << "\b\b\b   \n";
 	}
 
-	void delete_elem(int elem) override {}
+	/*
+	  Replace the element that need to be deleted with the minimum
+	  element in the sub tree for which this node is a root.
+	*/
+	void delete_elem(int e) override {
+		tree_node *node = root, *sub_root, *parent = NULL, *parent2 = NULL;
+
+		std::cout << "Deleting element " << e << std::endl;
+
+		if (!node) {
+			std::cout << "Calling delete on an empty tree object\n";
+			return;
+		}
+
+		while (node) {
+			if (node->elem > e) {
+				parent = node;
+				node = node->left;
+			} else if (node->elem < e) {
+				parent = node;
+				node = node->right;
+			} else
+				break;
+		}
+
+		if (!node) {
+			std::cout << "element " << e << " is not present in the tree\n";
+			return;
+		}
+
+		sub_root = node;
+
+		while (node->left) {
+			parent2 = node;
+			node = node->left;
+		}
+
+		//TODO handle root node deletion
+		if (!parent) {
+			std::cout << "Does not support root deletion\n";
+			return;
+		}
+
+		if (!parent2) {
+			if (parent->elem > e) {
+				parent->left = sub_root->right;
+			} else {
+				parent->right = sub_root->right;
+			}
+		} else {
+			parent2->left = NULL;
+
+			if (parent->elem > e) {
+				parent->left = node;
+			} else {
+				parent->right = node;
+			}
+
+			node->left = sub_root->left;
+			node->right = sub_root->right;
+		}
+
+		delete sub_root;
+	}
 
 	private:
 	tree_node *root;
@@ -85,7 +151,7 @@ class bst : public tree {
 	void traverse_tree_inorder_int(const tree_node *node) const {
 		if (node) {
 			traverse_tree_inorder_int(node->left);
-			std::cout << node->elem << std::endl;
+			std::cout << node->elem << " -> ";
 			traverse_tree_inorder_int(node->right);
 		}
 	}
@@ -100,7 +166,10 @@ int main() {
 	search_tree.insert_elem(7);
 	search_tree.insert_elem(-4);
 	search_tree.insert_elem(-2);
-	std::cout << search_tree.search_elem(2) << std::endl;
+	search_tree.insert_elem(3);
+	std::cout << "Search for 2 returned " << search_tree.search_elem(2) << std::endl;
+	search_tree.traverse_tree_inorder();
+	search_tree.delete_elem(4);
 	search_tree.traverse_tree_inorder();
 
 	return 0;
