@@ -11,26 +11,26 @@ class bst : public tree {
 	public:
 	bst() : root{NULL} {}
 
-	int find_min() {
-		tree_node *node {root};
+	tree_node* find_min(tree_node* node) {
 
+		if (!node) node = root;
 		if (!node) throw;
 
 		while(node->left)
 			node = node->left;
 
-		return node->elem;
+		return node;
 	}
 
-	int find_max() {
-		tree_node *node {root};
+	tree_node* find_max(tree_node *node) {
 
+		if (!node) node = root;
 		if (!node) throw;
 
 		while(node->right)
 			node = node->right;
 
-		return node->elem;
+		return node;
 	}
 
 	bool search_elem(int e) const override {
@@ -174,6 +174,11 @@ class bst : public tree {
 		}
 	}
 
+	void delete_elem_recursive(int e) {
+		std::cout << "Deleting node " << e << std::endl;
+		delete_elem_int(root, e);
+	}
+
 	private:
 	tree_node *root;
 
@@ -183,6 +188,34 @@ class bst : public tree {
 			std::cout << node->elem << " -> ";
 			traverse_tree_inorder_int(node->right);
 		}
+	}
+
+	tree_node* delete_elem_int(tree_node *node, int e) {
+
+		if (!node) return NULL;
+
+		if (node->elem > e) {
+			node->left = delete_elem_int(node->left, e);
+		} else if (node->elem < e ) {
+			node->right = delete_elem_int(node->right, e);
+		} else {
+			if (!node->left) {
+				tree_node *ret = node->right;
+				delete node;
+				return ret;
+			} else if (!node->right) {
+				tree_node *ret = node->left;
+				delete node;
+				return ret;
+			} else {
+				tree_node *temp = find_min(node->right);
+				node->elem = temp->elem;
+
+				node->right = delete_elem_int(node->right, node->elem);
+			}
+		}
+
+		return node;
 	}
 };
 
@@ -200,6 +233,8 @@ int main() {
 	search_tree.traverse_tree_inorder();
 	search_tree.delete_elem(3);
 	search_tree.traverse_tree_inorder();
-
+	search_tree.insert_elem(3);
+	search_tree.delete_elem_recursive(1);
+	search_tree.traverse_tree_inorder();
 	return 0;
 }
