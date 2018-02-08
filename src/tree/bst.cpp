@@ -110,39 +110,68 @@ class bst : public tree {
 			return;
 		}
 
-		sub_root = node;
-
-		while (node->left) {
-			parent2 = node;
-			node = node->left;
-		}
-
-		//TODO handle root node deletion
-		if (!parent) {
-			std::cout << "Does not support root deletion\n";
-			return;
-		}
-
-		if (!parent2) {
-			if (parent->elem > e) {
-				parent->left = sub_root->right;
+		if (!node->left && !node->right) {
+			if (!parent) {
+				root = NULL;
+			} else if (parent->elem > e) {
+				parent->left = NULL;
 			} else {
-				parent->right = sub_root->right;
+				parent->right = NULL;
 			}
+			delete node;
+		} else if (!node->right) {
+			if (!parent) {
+				root = node->left;
+			} else if (parent->elem > e) {
+				parent->left = node->left;
+			} else {
+				parent->right = node->left;
+			}
+			delete node;
+		} else if (!node->left) {
+			if (!parent) {
+				root = node->right;
+			} else if (parent->elem > e) {
+				parent->left = node->right;
+			} else {
+				parent->right = node->right;
+			}
+			delete node;
 		} else {
-			parent2->left = NULL;
+			sub_root = node;
+			node =  node->right;
 
-			if (parent->elem > e) {
-				parent->left = node;
-			} else {
-				parent->right = node;
+			while (node->left) {
+				parent2 = node;
+				node = node->left;
 			}
 
-			node->left = sub_root->left;
-			node->right = sub_root->right;
-		}
+			if (!parent2) {
+				if (!parent) {
+					root = sub_root->right;
+				} else if (parent->elem > e) {
+					parent->left = sub_root->right;
+				} else {
+					parent->right = sub_root->right;
+				}
+				node->left =  sub_root->left;
+			} else {
+				parent2->left = node->right;
 
-		delete sub_root;
+				if (!parent) {
+					root = node;
+				} else if (parent->elem > e) {
+					parent->left = node;
+				} else {
+					parent->right = node;
+				}
+
+				node->left = sub_root->left;
+				node->right = sub_root->right;
+			}
+
+			delete sub_root;
+		}
 	}
 
 	private:
@@ -169,7 +198,7 @@ int main() {
 	search_tree.insert_elem(3);
 	std::cout << "Search for 2 returned " << search_tree.search_elem(2) << std::endl;
 	search_tree.traverse_tree_inorder();
-	search_tree.delete_elem(4);
+	search_tree.delete_elem(3);
 	search_tree.traverse_tree_inorder();
 
 	return 0;
