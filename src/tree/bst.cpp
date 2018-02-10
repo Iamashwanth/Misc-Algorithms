@@ -80,103 +80,16 @@ class bst : public tree {
 		std::cout << "\b\b\b   \n";
 	}
 
-	/*
-	  Replace the element that need to be deleted with the minimum
-	  element in the sub tree for which this node is a root.
-	*/
-	void delete_elem(int e) override {
-		tree_node *node = root, *sub_root, *parent = NULL, *parent2 = NULL;
-
-		std::cout << "Deleting element " << e << std::endl;
-
-		if (!node) {
-			std::cout << "Calling delete on an empty tree object\n";
-			return;
-		}
-
-		while (node) {
-			if (node->elem > e) {
-				parent = node;
-				node = node->left;
-			} else if (node->elem < e) {
-				parent = node;
-				node = node->right;
-			} else
-				break;
-		}
-
-		if (!node) {
-			std::cout << "element " << e << " is not present in the tree\n";
-			return;
-		}
-
-		if (!node->left && !node->right) {
-			if (!parent) {
-				root = NULL;
-			} else if (parent->elem > e) {
-				parent->left = NULL;
-			} else {
-				parent->right = NULL;
-			}
-			delete node;
-		} else if (!node->right) {
-			if (!parent) {
-				root = node->left;
-			} else if (parent->elem > e) {
-				parent->left = node->left;
-			} else {
-				parent->right = node->left;
-			}
-			delete node;
-		} else if (!node->left) {
-			if (!parent) {
-				root = node->right;
-			} else if (parent->elem > e) {
-				parent->left = node->right;
-			} else {
-				parent->right = node->right;
-			}
-			delete node;
-		} else {
-			sub_root = node;
-			node =  node->right;
-
-			while (node->left) {
-				parent2 = node;
-				node = node->left;
-			}
-
-			if (!parent2) {
-				if (!parent) {
-					root = sub_root->right;
-				} else if (parent->elem > e) {
-					parent->left = sub_root->right;
-				} else {
-					parent->right = sub_root->right;
-				}
-				node->left =  sub_root->left;
-			} else {
-				parent2->left = node->right;
-
-				if (!parent) {
-					root = node;
-				} else if (parent->elem > e) {
-					parent->left = node;
-				} else {
-					parent->right = node;
-				}
-
-				node->left = sub_root->left;
-				node->right = sub_root->right;
-			}
-
-			delete sub_root;
-		}
-	}
-
-	void delete_elem_recursive(int e) {
+	void delete_elem(int e) {
 		std::cout << "Deleting node " << e << std::endl;
 		delete_elem_int(root, e);
+	}
+
+	int LCA(int x, int y) {
+		tree_node *temp;
+		temp = LCA_int(root, x , y);
+		if (temp) return temp->elem;
+		else throw;
 	}
 
 	private:
@@ -217,6 +130,21 @@ class bst : public tree {
 
 		return node;
 	}
+
+	tree_node* LCA_int(tree_node* node, int x, int y) {
+		if (!node) return NULL;
+
+		if (node->elem > x && node->elem > y) {
+			LCA_int(node->left, x, y);
+		} else if (node->elem < x && node->elem < y) {
+			return LCA_int(node->right, x, y);
+		} else if (node->elem >= x && node->elem <=y) {
+			return node;
+		}
+
+		return NULL;
+	}
+
 };
 
 int main() {
@@ -233,8 +161,6 @@ int main() {
 	search_tree.traverse_tree_inorder();
 	search_tree.delete_elem(3);
 	search_tree.traverse_tree_inorder();
-	search_tree.insert_elem(3);
-	search_tree.delete_elem_recursive(1);
-	search_tree.traverse_tree_inorder();
+	std::cout << "LCA of 0 and 4 : " << search_tree.LCA(4, 0) << std::endl;
 	return 0;
 }
