@@ -10,6 +10,12 @@
 class bst : public tree {
 	public:
 	bst() : root{NULL} {}
+	bst(std::initializer_list<int> l) {
+		root = NULL;
+		for (auto it=l.begin(); it!=l.end(); it++) {
+			this->insert_elem(*it);
+		}
+	}
 
 	tree_node* find_min(tree_node* node) {
 
@@ -148,19 +154,11 @@ class bst : public tree {
 };
 
 int main() {
-	bst search_tree;
-	search_tree.insert_elem(1);
-	search_tree.insert_elem(2);
-	search_tree.insert_elem(4);
-	search_tree.insert_elem(0);
-	search_tree.insert_elem(7);
-	search_tree.insert_elem(-4);
-	search_tree.insert_elem(-2);
-	search_tree.insert_elem(3);
+	bst search_tree = {1, 2, 4, 0, 7, -4, -2, 3};
 	std::cout << "Search for 2 returned " << search_tree.search_elem(2) << std::endl;
 	search_tree.traverse_tree_inorder();
 	search_tree.delete_elem(3);
 	search_tree.traverse_tree_inorder();
-	std::cout << "LCA of 0 and 4 : " << search_tree.LCA(4, 0) << std::endl;
+	std::cout << "LCA of 2 and 4 : " << search_tree.LCA(2, 4) << std::endl;
 	return 0;
 }
