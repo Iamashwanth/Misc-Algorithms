@@ -76,18 +76,18 @@ class bst : public tree {
 
 	void traverse_tree_inorder() const override {
 		std::cout << "Inorder Traversal\n";
-		traverse_tree_inorder_int(root);
+		traverse_tree_inorder(root);
 		std::cout << "\b\b\b   \n";
 	}
 
 	void delete_elem(int e) {
 		std::cout << "Deleting node " << e << std::endl;
-		delete_elem_int(root, e);
+		delete_elem(root, e);
 	}
 
 	int LCA(int x, int y) {
 		tree_node *temp;
-		temp = LCA_int(root, x , y);
+		temp = LCA(root, x , y);
 		if (temp) return temp->elem;
 		else throw;
 	}
@@ -95,22 +95,22 @@ class bst : public tree {
 	private:
 	tree_node *root;
 
-	void traverse_tree_inorder_int(const tree_node *node) const {
+	void traverse_tree_inorder(const tree_node *node) const {
 		if (node) {
-			traverse_tree_inorder_int(node->left);
+			traverse_tree_inorder(node->left);
 			std::cout << node->elem << " -> ";
-			traverse_tree_inorder_int(node->right);
+			traverse_tree_inorder(node->right);
 		}
 	}
 
-	tree_node* delete_elem_int(tree_node *node, int e) {
+	tree_node* delete_elem(tree_node *node, int e) {
 
 		if (!node) return NULL;
 
 		if (node->elem > e) {
-			node->left = delete_elem_int(node->left, e);
+			node->left = delete_elem(node->left, e);
 		} else if (node->elem < e ) {
-			node->right = delete_elem_int(node->right, e);
+			node->right = delete_elem(node->right, e);
 		} else {
 			if (!node->left) {
 				tree_node *ret = node->right;
@@ -124,20 +124,20 @@ class bst : public tree {
 				tree_node *temp = find_min(node->right);
 				node->elem = temp->elem;
 
-				node->right = delete_elem_int(node->right, node->elem);
+				node->right = delete_elem(node->right, node->elem);
 			}
 		}
 
 		return node;
 	}
 
-	tree_node* LCA_int(tree_node* node, int x, int y) {
+	tree_node* LCA(tree_node* node, int x, int y) {
 		if (!node) return NULL;
 
 		if (node->elem > x && node->elem > y) {
-			LCA_int(node->left, x, y);
+			LCA(node->left, x, y);
 		} else if (node->elem < x && node->elem < y) {
-			return LCA_int(node->right, x, y);
+			return LCA(node->right, x, y);
 		} else if (node->elem >= x && node->elem <=y) {
 			return node;
 		}

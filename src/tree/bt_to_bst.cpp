@@ -19,14 +19,6 @@ void inorder_restore(tree_node *node, std::list<int> &q) {
 	inorder_restore(node->right, q);
 }
 
-void inorder_print(tree_node *node) {
-	if (!node) return;
-
-	inorder_print(node->left);
-	std::cout << node->elem << " ";
-	inorder_print(node->right);
-}
-
 void bt_2_bst(tree_node *root) {
 	std::list<int> l;
 	inorder_print(root);

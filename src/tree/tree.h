@@ -20,4 +20,12 @@ class tree {
 	virtual ~tree() {};
 };
 
+inline void inorder_print(tree_node *node) {
+	if (!node) return;
+
+	inorder_print(node->left);
+	std::cout << node->elem << " ";
+	inorder_print(node->right);
+}
+
 #endif
