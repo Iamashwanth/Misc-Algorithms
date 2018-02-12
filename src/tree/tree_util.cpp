@@ -21,13 +21,15 @@ void inorder_restore(tree_node *node, std::list<int> &l) {
 
 void bt_2_bst(tree_node *root) {
 	std::list<int> l;
+	std::cout << "Inorder traversal of BT\n";
 	inorder_print(root);
 	std::cout << std::endl;
 	inorder_save(root, l);
 	l.sort();
 	inorder_restore(root, l);
+	std::cout << "Inorder traversal of BST\n";
 	inorder_print(root);
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl;
 }
 
 bool is_isomorphic(tree_node *x, tree_node *y) {
@@ -68,10 +70,48 @@ void print_leaf(tree_node *node) {
 }
 
 void bounary_traversal(tree_node *node) {
+	std::cout << "Boundary traversal\n";
 	print_left_edge(node);
 	print_leaf(node);
 	if (node->right) print_right_edge(node->right);
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl;
+}
+
+tree_node* LCA(tree_node *node, int x, int y) {
+	tree_node *left, *right;
+
+	if (!node) return NULL;
+
+	if (node->elem == x || node->elem == y) {
+		return node;
+	}
+
+	left = LCA(node->left, x, y);
+
+	if (left && left->elem != x && left->elem != y) return left;
+
+	right = LCA(node->right, x, y);
+
+	if (left && right) return node;
+	return left ? left : right;
+}
+
+int height(tree_node *node, int e) {
+	int left, right;
+
+	if (!node) return -1;
+	if (node->elem == e) return 0;
+
+	left = height(node->left, e);
+	if (left != -1) return left+1;
+
+	right = height(node->right, e);
+	if (right != -1) return right+1;
+}
+
+int shortest_path(tree_node *node, int x, int y) {
+	tree_node *lca = LCA(node, x, y);
+	return height(lca, x) + height(lca, y);
 }
 
 int main() {
@@ -97,11 +137,14 @@ int main() {
 	inorder_print(x);
 	std::cout << "\nInorder Access tree 2 ";
 	inorder_print(y);
-	std::cout << std::endl;
+	std::cout << std::endl << std::endl;
 
-	std::cout << "Isomorphic " << is_isomorphic(x, y) << std::endl;
+	std::cout << "Isomorphic " << is_isomorphic(x, y) << "\n\n";
 
 	bt_2_bst(y);
 	bounary_traversal(x);
+	std::cout << "LCA of 1 and 5 is " << (LCA(x, 1, 5))->elem << "\n\n";
+	std::cout << "Height of node 7 is " << height(x, 7) << "\n\n";
+	std::cout << "Shortest path between 8 and 6 is " << shortest_path(x, 8, 6) << "\n\n";
 	return 0;
 }
