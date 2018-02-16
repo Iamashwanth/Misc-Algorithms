@@ -33,6 +33,45 @@ class linked_list {
 		tail = tail->next;
 	}
 
+	void pop_front() {
+		node *tmp = head;
+		if (!head) return;
+
+		head = head->next;
+		delete(tmp);
+
+		if (!head) tail = NULL;
+	}
+
+	void pop_back() {
+		node *tmp = head;
+		if (!head) return;
+
+		if (head == tail) return pop_front();
+
+		while (tmp->next != tail) tmp = tmp->next;
+
+		tmp->next = NULL;
+		delete(tail);
+		tail = tmp;
+	}
+
+	void reverse() {
+		if (head == tail) return;
+
+		tail = head;
+		head = reverse(head, NULL);
+	}
+
+	node* reverse(node *n, node *p) {
+		node *c;
+		if (!n) return p;
+
+		c = n->next;
+		n->next = p;
+		reverse(c, n);
+	}
+
 	void print_list() {
 		node *n =  head;
 
@@ -56,5 +95,12 @@ int main() {
 	l.push_front(1);
 	l.push_back(5);
 	l.push_back(9);
+	l.print_list();
+	l.pop_front();
+	l.pop_back();
+	l.pop_back();
+	l.pop_back();
+	l.print_list();
+	l.reverse();
 	l.print_list();
 }
