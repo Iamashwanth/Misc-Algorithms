@@ -7,6 +7,7 @@ class node {
 
 	node(): next {NULL} {}
 	node(int e): elem {e}, next{NULL} {}
+	node(int e, node *n): elem {e}, next{n} {}
 };
 
 class linked_list {
@@ -60,20 +61,82 @@ class linked_list {
 		if (head == tail) return;
 
 		tail = head;
-		head = reverse(head, NULL);
+		head = reverse(head, NULL, NULL);
 	}
 
-	node* reverse(node *n, node *p) {
+	node* reverse(node *n, node *p, node *end) {
 		node *c;
-		if (!n) return p;
+		if (!n || n == end) return p;
 
 		c = n->next;
 		n->next = p;
-		reverse(c, n);
+		reverse(c, n, end);
+	}
+
+	void reverse_i() {
+		node *n = head, *p = NULL, *c;
+
+		if (head == tail) return;
+
+		while (n) {
+			c = n->next;
+			n->next = p;
+			p = n;
+			n = c;
+		}
+
+		tail = head;
+		head  = p;
+	}
+
+	void reverse_i(int a, int b) {
+		node *start, *end;
+		node *p = NULL, *c, *n = head;
+		int i = 1;
+
+		if (a == b) return;
+
+		while (i < a) {
+			p = n;
+			n = n->next;
+			i++;
+		}
+
+		start = n;
+
+		while (i < b) {
+			n = n->next;
+			i++;
+		}
+
+		end = n;
+
+		if (p) {
+			p->next =  end;
+		} else {
+			head = end;
+		}
+
+		if (end == tail) tail = start;
+
+		p = end->next;
+		n = start;
+
+		while (n != end) {
+			c = n->next;
+			n->next = p;
+			p = n;
+			n = c;
+		}
+
+		n->next = p;
 	}
 
 	void print_list() {
-		node *n =  head;
+		print_list_util(head);
+	}
+
+	static void print_list_util(node *n) {
 
 		while (n) {
 			std::cout << n->elem << " ";
@@ -87,7 +150,57 @@ class linked_list {
 	node *head, *tail;
 };
 
+node* detect_loop(node *head) {
+	node *s, *f;
+
+	if (!head) return NULL;
+
+	s = f = head;
+
+	do {
+		s = s->next;
+		if (!s) return NULL;
+
+		f = f->next;
+		if (!f) return NULL;
+
+		f = f->next;
+		if (!f) return NULL;
+
+	} while (s != f);
+
+	return s;
+}
+
+void remove_loop(node *head) {
+	int i = 0, n = 1;
+	node *loop = detect_loop(head);
+	node *tmp, *f, *s;
+
+	if (!loop) return;
+
+	tmp = loop->next;
+	while (tmp != loop) {
+		tmp = tmp->next;
+		n++;
+	}
+
+	std::cout << n << std::endl;
+
+	f = s = head;
+
+	while(i++ < n) s = s->next;
+
+	while(s->next != f->next) {
+		s = s->next;
+		f = f->next;
+	}
+
+	s->next = NULL;
+}
+
 int main() {
+	//Test basic operations
 	linked_list l {11, 14, 67};
 	l.push_front(1);
 	l.push_front(2);
@@ -98,9 +211,21 @@ int main() {
 	l.print_list();
 	l.pop_front();
 	l.pop_back();
-	l.pop_back();
-	l.pop_back();
 	l.print_list();
+
+	//Test reverse routines
 	l.reverse();
 	l.print_list();
+	l.reverse_i();
+	l.print_list();
+	l.reverse_i(1, 7);
+	l.print_list();
+
+	//Test loops
+	node *loop = new node(3);
+	node *ll = new node(1, new node(2, loop));
+	loop->next = new node(4, new node(5, new node(6, loop)));
+	std::cout << "Loop ? " << (bool)detect_loop(ll) << std::endl;
+	remove_loop(ll);
+	linked_list::print_list_util(ll);
 }
