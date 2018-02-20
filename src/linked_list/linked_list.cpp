@@ -64,6 +64,36 @@ class linked_list {
 		head = reverse(head, NULL, NULL);
 	}
 
+	void reverse(int n, int alt = 0) {
+		int i, rev = 1;
+		node *start_p = NULL, *start = head;
+		node *end = start, *end_n, *ret;
+
+		while (start) {
+			for (i = 1; i < n && end->next; i++) {
+				end = end->next;
+			}
+			end_n = end->next;
+
+			if (rev) {
+				ret = reverse(start, end_n, end_n);
+
+				if (start_p) start_p->next = ret;
+				else head = ret;
+
+				start_p = start;
+			} else {
+				start_p = end;
+			}
+
+			if (alt) rev = rev ? 0 : 1;
+
+			end = start = end_n;
+		}
+
+		tail = start_p;
+	}
+
 	node* reverse(node *n, node *p, node *end) {
 		node *c;
 		if (!n || n == end) return p;
@@ -218,7 +248,7 @@ int main() {
 	l.print_list();
 	l.reverse_i();
 	l.print_list();
-	l.reverse_i(1, 7);
+	l.reverse_i(2, 6);
 	l.print_list();
 
 	//Test loops
@@ -228,4 +258,9 @@ int main() {
 	std::cout << "Loop ? " << (bool)detect_loop(ll) << std::endl;
 	remove_loop(ll);
 	linked_list::print_list_util(ll);
+
+	l.reverse(2);
+	l.print_list();
+	l.reverse(2, 1);
+	l.print_list();
 }
