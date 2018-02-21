@@ -176,6 +176,33 @@ class linked_list {
 		std::cout << std::endl;
 	}
 
+	static node* sum_list(node *a, node *b) {
+		node *sum = sum_list_internal(a, b);
+
+		if (sum && sum->elem >= 10) {
+			sum = new node(sum->elem/10, sum);
+			sum->next->elem = sum->next->elem%10;
+		}
+
+		return sum;
+	}
+
+	static node* sum_list_internal(node *a, node *b) {
+		if (!a || !b) return NULL;
+
+		node *ret;
+		node *sum = new node(a->elem + b->elem);
+
+		sum->next = sum_list_internal(a->next, b->next);
+
+		if (sum->next && sum->next->elem >= 10) {
+			sum->elem += sum->next->elem/10;
+			sum->next->elem = sum->next->elem%10;
+		}
+
+		return sum;
+	}
+
 	private:
 	node *head, *tail;
 };
@@ -259,8 +286,15 @@ int main() {
 	remove_loop(ll);
 	linked_list::print_list_util(ll);
 
+	//Test reverse K nodes and alternate K nodes
 	l.reverse(2);
 	l.print_list();
 	l.reverse(2, 1);
 	l.print_list();
+
+	//Test sum of two linked lists
+	node *a = new node(5, new node(4, new node(7, NULL)));
+	node *b = new node(7, new node(2, new node(4, NULL)));
+	node *sum = linked_list::sum_list(a, b);
+	linked_list::print_list_util(sum);
 }
