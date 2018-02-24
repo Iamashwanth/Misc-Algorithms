@@ -17,6 +17,12 @@ class bst : public tree {
 		}
 	}
 
+	/* creates a balaned bst from a sorted array */
+	bst(int *a, int s, int n) {
+		root = NULL;
+		insert_sorted_array(a, s, n-1);
+	}
+
 	tree_node* find_min(tree_node* node) {
 
 		if (!node) node = root;
@@ -82,8 +88,8 @@ class bst : public tree {
 
 	void traverse_tree_inorder() const override {
 		std::cout << "Inorder Traversal\n";
-		traverse_tree_inorder(root);
-		std::cout << "\b\b\b   \n";
+		inorder_print(root);
+		std::cout << "\n";
 	}
 
 	void delete_elem(int e) {
@@ -101,12 +107,15 @@ class bst : public tree {
 	private:
 	tree_node *root;
 
-	void traverse_tree_inorder(const tree_node *node) const {
-		if (node) {
-			traverse_tree_inorder(node->left);
-			std::cout << node->elem << " -> ";
-			traverse_tree_inorder(node->right);
-		}
+	void insert_sorted_array(int *a, int i, int j) {
+		int mid = i + (j - i) / 2;
+
+		if (i > j) return;
+
+		insert_elem(a[mid]);
+
+		insert_sorted_array(a, i, mid-1);
+		insert_sorted_array(a, mid+1, j);
 	}
 
 	tree_node* delete_elem(tree_node *node, int e) {
@@ -154,11 +163,14 @@ class bst : public tree {
 };
 
 int main() {
+	int a[] = {1, 2, 3, 4, 5, 6};
 	bst search_tree = {1, 2, 4, 0, 7, -4, -2, 3};
+	bst st2(a, 0, 6);
 	std::cout << "Search for 2 returned " << search_tree.search_elem(2) << std::endl;
 	search_tree.traverse_tree_inorder();
 	search_tree.delete_elem(3);
 	search_tree.traverse_tree_inorder();
 	std::cout << "LCA of 2 and 4 : " << search_tree.LCA(2, 4) << std::endl;
+	st2.traverse_tree_inorder();
 	return 0;
 }
