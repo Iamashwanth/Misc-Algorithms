@@ -19,6 +19,36 @@ void inorder_restore(tree_node *node, std::list<int> &l) {
 	inorder_restore(node->right, l);
 }
 
+/* In this approach we pass down the parent node either using
+   the min or max agrument based on whether we are checking
+   the left or the right sub-tree. */
+
+bool is_bst(tree_node *node, tree_node *min = NULL, tree_node *max = NULL) {
+	if (!node) return true;
+
+	if (min and node->elem < min->elem) return false;
+	if (max and node->elem > max->elem) return false;
+
+	return is_bst(node->left, min, node) &&
+		is_bst(node->right, node, max);
+}
+
+/* Keep track of the previous node and use it to check if inorder traversal
+   results in non-decreasing sequence */
+
+bool is_bst_inorder(tree_node *node) {
+	static tree_node *prev = NULL;
+
+	if (!node) return true;
+
+	if (!is_bst_inorder(node->left) ||
+	    (prev && node->elem < prev->elem))
+		return false;
+
+	prev = node;
+	return is_bst_inorder(node->right);
+}
+
 void bt_2_bst(tree_node *root) {
 	std::list<int> l;
 	std::cout << "Inorder traversal of BT\n";
@@ -141,7 +171,10 @@ int main() {
 
 	std::cout << "Isomorphic " << is_isomorphic(x, y) << "\n\n";
 
+	std::cout << "is y bst? " << is_bst(y) << "\n\n";
 	bt_2_bst(y);
+	std::cout << "is y bst? " << is_bst_inorder(y) << "\n\n";
+
 	bounary_traversal(x);
 	std::cout << "LCA of 1 and 5 is " << (LCA(x, 1, 5))->elem << "\n\n";
 	std::cout << "Height of node 7 is " << height(x, 7) << "\n\n";
