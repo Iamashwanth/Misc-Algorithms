@@ -6,7 +6,7 @@ file(GLOB TEST_SRCS *.cpp)
 
 add_library(libtest STATIC ${TEST_SRCS})
 
-target_link_libraries(libtest libtree)
+target_link_libraries(libtest libcode)
 
 target_include_directories(libtest PUBLIC
 			   ${CMAKE_CURRENT_SOURCE_DIR})

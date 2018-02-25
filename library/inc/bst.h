@@ -161,16 +161,3 @@ class bst : public tree {
 	}
 
 };
-
-int main() {
-	int a[] = {1, 2, 3, 4, 5, 6};
-	bst search_tree = {1, 2, 4, 0, 7, -4, -2, 3};
-	bst st2(a, 0, 6);
-	std::cout << "Search for 2 returned " << search_tree.search_elem(2) << std::endl;
-	search_tree.traverse_tree_inorder();
-	search_tree.delete_elem(3);
-	search_tree.traverse_tree_inorder();
-	std::cout << "LCA of 2 and 4 : " << search_tree.LCA(2, 4) << std::endl;
-	st2.traverse_tree_inorder();
-	return 0;
-}

@@ -2,6 +2,7 @@
 #define TESTGROUPS_H value
 
 extern const TestFamily* tree_init(void);
+extern const TestFamily* bst_init(void);
 
 typedef const TestFamily* (*InitFunction)(void);
 
@@ -11,6 +12,7 @@ struct TestGroups {
 } groups[] =
 {
     {.init = tree_init},
+    {.init = bst_init},
 };
 
 #endif /* ifndef TESTGROUPS_H */

@@ -12,20 +12,21 @@ class subsets: public backtracking {
 
 	std::vector<int>* candidate_space(int k) const override {
 		std::vector<int> *c = new std::vector<int>;
-		c->push_back(0);
 		c->push_back(1);
+		c->push_back(0);
 		return c;
 	}
 
-	void process_solution(int k) const override {
+	void process_solution(int k) override {
+		std::cout << "{";
 		for (int i = 0; i < k; i++)
-			std::cout << v[i] << " ";
-		std::cout << std::endl;
+			if (v[i]) std::cout << i+1;
+		std::cout << "}" << std::endl;
 	}
 };
 
 int main() {
-	subsets s(5);
+	subsets s(3);
 	s.backtrack(0);
 	return 0;
 }

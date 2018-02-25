@@ -23,7 +23,7 @@ void inorder_restore(tree_node *node, std::list<int> &l) {
    the min or max agrument based on whether we are checking
    the left or the right sub-tree. */
 
-bool is_bst(tree_node *node, tree_node *min = NULL, tree_node *max = NULL) {
+bool is_bst(tree_node *node, tree_node *min, tree_node *max) {
 	if (!node) return true;
 
 	if (min and node->elem < min->elem) return false;
@@ -142,42 +142,4 @@ int height(tree_node *node, int e) {
 int shortest_path(tree_node *node, int x, int y) {
 	tree_node *lca = LCA(node, x, y);
 	return height(lca, x) + height(lca, y);
-}
-
-int run_tests() {
-	tree_node *x = new tree_node(1);
-	x->left = new tree_node(2);
-	x->right = new tree_node(3);
-	x->left->left = new tree_node(4);
-	x->left->right = new tree_node(5);
-	x->right->left = new tree_node(6);
-	x->left->right->left = new tree_node(7);
-	x->left->right->right = new tree_node(8);
-
-	tree_node *y = new tree_node(1);
-	y->left = new tree_node(3);
-	y->right = new tree_node(2);
-	y->left->right = new tree_node(6);
-	y->right->left = new tree_node(4);
-	y->right->right = new tree_node(5);
-	y->right->right->right = new tree_node(7);
-	y->right->right->left = new tree_node(8);
-
-	std::cout << "Inorder Access tree 1 ";
-	inorder_print(x);
-	std::cout << "\nInorder Access tree 2 ";
-	inorder_print(y);
-	std::cout << std::endl << std::endl;
-
-	std::cout << "Isomorphic " << is_isomorphic(x, y) << "\n\n";
-
-	std::cout << "is y bst? " << is_bst(y) << "\n\n";
-	bt_2_bst(y);
-	std::cout << "is y bst? " << is_bst_inorder(y) << "\n\n";
-
-	bounary_traversal(x);
-	std::cout << "LCA of 1 and 5 is " << (LCA(x, 1, 5))->elem << "\n\n";
-	std::cout << "Height of node 7 is " << height(x, 7) << "\n\n";
-	std::cout << "Shortest path between 8 and 6 is " << shortest_path(x, 8, 6) << "\n\n";
-	return 0;
 }

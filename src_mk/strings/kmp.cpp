@@ -110,3 +110,12 @@ class kmp {
 		build_pattern_table();
 	}
 };
+
+int main(void) {
+	kmp *substr = new kmp("abcdabceabcde");
+	substr->print_pattern_table();
+	const std::string &str = "abcdacbeabceabcdabceabcdeeabc";
+	int index = substr->search_str(str);
+	cout << "Input string: " << str << endl;
+	cout << "Pattern found at index " << index << endl;
+}

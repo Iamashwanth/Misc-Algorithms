@@ -9,14 +9,13 @@ include_directories("$(CMAKE_CURRENT_SOURCE_DIR)/tests/")
 
 file(GLOB
      SOURCES
-     main.cpp *.h test/*.h
-     )
+     main.cpp)
 
+add_subdirectory(library)
 add_subdirectory(tests)
-add_subdirectory(tree)
 
-add_executable(run ${SOURCES})
+add_executable(run_tests ${SOURCES})
 
-target_link_libraries(run libtest libtree)
+target_link_libraries(run_tests libtest libcode)
 
-install(TARGETS run DESTINATION bin)
+install(TARGETS run_tests DESTINATION bin)

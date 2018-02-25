@@ -28,6 +28,13 @@ inline void inorder_print(tree_node *node) {
 	inorder_print(node->right);
 }
 
+bool is_bst(tree_node *node, tree_node *min = NULL, tree_node *max = NULL);
+bool is_bst_inorder(tree_node *node);
+void bt_2_bst(tree_node *root);
 bool is_isomorphic(tree_node *x, tree_node *y);
+void bounary_traversal(tree_node *node);
+tree_node* LCA(tree_node *node, int x, int y);
+int height(tree_node *node, int e);
+int shortest_path(tree_node *node, int x, int y);
 
 #endif
