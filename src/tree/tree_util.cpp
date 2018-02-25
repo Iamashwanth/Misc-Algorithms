@@ -144,7 +144,7 @@ int shortest_path(tree_node *node, int x, int y) {
 	return height(lca, x) + height(lca, y);
 }
 
-int main() {
+int run_tests() {
 	tree_node *x = new tree_node(1);
 	x->left = new tree_node(2);
 	x->right = new tree_node(3);

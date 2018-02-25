@@ -28,4 +28,6 @@ inline void inorder_print(tree_node *node) {
 	inorder_print(node->right);
 }
 
+bool is_isomorphic(tree_node *x, tree_node *y);
+
 #endif
