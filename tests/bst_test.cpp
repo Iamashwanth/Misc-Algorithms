@@ -20,11 +20,20 @@ int bst_lca_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int ll_to_bst_test(void *data) {
+	node *a = new node(3, new node(4, new node(7, new node(9, NULL))));
+
+	bst st(a);
+	st.traverse_tree_inorder();
+	return TEST_SUCCESS;
+}
+
 const TestFamily* bst_init() {
 	TestFamily *testFamily = new TestFamily("bst", static_cast<int>(10));
 
 	TEST_DEF(BST_OP_TEST, bst_op_test);
 	TEST_DEF(LCA_TEST, bst_lca_test);
+	TEST_DEF(LL_2_BST_TEST, ll_to_bst_test);
 
 	return testFamily;
 }
