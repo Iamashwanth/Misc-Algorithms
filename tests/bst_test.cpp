@@ -5,7 +5,7 @@
 int bst_op_test(void *data) {
 	int a[] = {1, 2, 3, 4, 5, 6};
 	bst search_tree = {1, 2, 4, 0, 7, -4, -2, 3};
-	bst st2(a, 0, 6);
+	bst st2(a, 6);
 	std::cout << "Search for 2 returned " << search_tree.search_elem(2) << std::endl;
 	search_tree.traverse_tree_inorder();
 	search_tree.delete_elem(3);
@@ -28,12 +28,23 @@ int ll_to_bst_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int pre_to_bst_test(void *data) {
+	int a[] = {3, 1, 0, 2, 4, 5};
+	bst st;
+
+	st.preorder_to_bst(a, 6);
+	st.traverse_tree_inorder();
+
+	return TEST_SUCCESS;
+}
+
 const TestFamily* bst_init() {
 	TestFamily *testFamily = new TestFamily("bst", static_cast<int>(10));
 
 	TEST_DEF(BST_OP_TEST, bst_op_test);
 	TEST_DEF(LCA_TEST, bst_lca_test);
 	TEST_DEF(LL_2_BST_TEST, ll_to_bst_test);
+	TEST_DEF(PRE_2_BST_TEST, pre_to_bst_test);
 
 	return testFamily;
 }

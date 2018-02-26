@@ -16,9 +16,9 @@ bst::bst(std::initializer_list<int> l) {
 }
 
 /* creates a balaned bst from a sorted array */
-bst::bst(int *a, int s, int n) {
+bst::bst(int *a, int n) {
 	root = NULL;
-	insert_sorted_array(a, s, n-1);
+	insert_sorted_array(a, 0, n-1);
 }
 
 /* creates a balaned bst from a linked list */
@@ -142,6 +142,31 @@ tree_node* bst::ll_to_bst(node **headp, int n) {
 	root->right = ll_to_bst(headp, n - n/2 - 1);
 
 	return root;
+}
+
+/* If the preorder traversal is saved along with the markers for NULL nodes,
+   reconstructing the tree would be straightforward */
+void bst::preorder_to_bst(int *a, int n) {
+	int i = 0;
+	root = preorder_to_bst_util(NULL, a, &i, n);
+}
+
+/* We pass down the parent node as the max arguemnt to make a switch to the
+   right sub-tree whenever an element is greater than the max that is passed */
+
+tree_node* bst::preorder_to_bst_util(tree_node *max, int *a, int *i, int n) {
+	if (*i == n) return NULL;
+
+	if (max && a[*i] > max->elem) return NULL;
+
+	tree_node *tn = new tree_node(a[*i]);
+
+	(*i)++;
+
+	tn->left = preorder_to_bst_util(tn, a, i, n);
+	tn->right = preorder_to_bst_util(max, a, i, n);
+
+	return tn;
 }
 
 tree_node* bst::delete_elem(tree_node *node, int e) {
