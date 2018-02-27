@@ -1,5 +1,6 @@
 #include <iostream>
 #include <list>
+#include <vector>
 #include "tree.h"
 
 void tree::traverse_tree_inorder(tree_node *node) {
@@ -8,6 +9,24 @@ void tree::traverse_tree_inorder(tree_node *node) {
 	traverse_tree_inorder(node->left);
 	std::cout << node->elem << " ";
 	traverse_tree_inorder(node->right);
+}
+
+void tree::traverse_tree_inorder_i(tree_node *node) {
+	std::vector<tree_node*> s;
+
+	while (node || s.size()) {
+		while (node) {
+			s.push_back(node);
+			node = node->left;
+		}
+
+		node = s.back();
+		s.pop_back();
+
+		std::cout << node->elem << " ";
+
+		node = node->right;
+	}
 }
 
 void inorder_save(tree_node *node, std::list<int> &l) {

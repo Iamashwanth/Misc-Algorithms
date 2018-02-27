@@ -19,6 +19,7 @@ class tree {
 	virtual void traverse_tree_inorder() const = 0;
 
 	static void traverse_tree_inorder(tree_node *node);
+	static void traverse_tree_inorder_i(tree_node *node);
 
 	virtual ~tree() {};
 };
