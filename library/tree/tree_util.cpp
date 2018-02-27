@@ -2,6 +2,14 @@
 #include <list>
 #include "tree.h"
 
+void tree::traverse_tree_inorder(tree_node *node) {
+	if (!node) return;
+
+	traverse_tree_inorder(node->left);
+	std::cout << node->elem << " ";
+	traverse_tree_inorder(node->right);
+}
+
 void inorder_save(tree_node *node, std::list<int> &l) {
 	if (!node) return;
 
@@ -52,13 +60,13 @@ bool is_bst_inorder(tree_node *node) {
 void bt_2_bst(tree_node *root) {
 	std::list<int> l;
 	std::cout << "Inorder traversal of BT\n";
-	inorder_print(root);
+	tree::traverse_tree_inorder(root);
 	std::cout << std::endl;
 	inorder_save(root, l);
 	l.sort();
 	inorder_restore(root, l);
 	std::cout << "Inorder traversal of BST\n";
-	inorder_print(root);
+	tree::traverse_tree_inorder(root);
 	std::cout << std::endl << std::endl;
 }
 
@@ -142,4 +150,43 @@ int height(tree_node *node, int e) {
 int shortest_path(tree_node *node, int x, int y) {
 	tree_node *lca = LCA(node, x, y);
 	return height(lca, x) + height(lca, y);
+}
+
+void fix_bst_2_node_util(tree_node *cur, tree_node **prev, tree_node **n1,
+			 tree_node **n1p, tree_node **n2) {
+	if (!cur) return;
+
+	fix_bst_2_node_util(cur->left, prev, n1, n1p, n2);
+
+	if (*prev && cur->elem < (*prev)->elem) {
+		if (!(*n1)) {
+			*n1 = cur;
+			*n1p = *prev;
+		} else {
+			*n2 = cur;
+		}
+	}
+
+	*prev = cur;
+
+	fix_bst_2_node_util(cur->right, prev, n1, n1p, n2);
+}
+
+int fix_bst_2_node(tree_node *root) {
+	tree_node *n1, *n1p, *n2, *prev;
+	n1 = n2 = n1p = prev = NULL;
+	int tmp;
+
+	fix_bst_2_node_util(root, &prev, &n1, &n1p, &n2);
+
+	if (n2) {
+		tmp = n1p->elem;
+		n1p->elem = n2->elem;
+		n2->elem = tmp;
+	} else {
+		n2 = n1;;
+		tmp = n1p->elem;
+		n1p->elem = n2->elem;
+		n2->elem = tmp;
+	}
 }

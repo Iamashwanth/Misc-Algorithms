@@ -22,9 +22,9 @@ int tree_test(void *data) {
 	y->right->right->left = new tree_node(8);
 
 	std::cout << "Inorder Access tree 1 ";
-	inorder_print(x);
+	tree::traverse_tree_inorder(x);
 	std::cout << "\nInorder Access tree 2 ";
-	inorder_print(y);
+	tree::traverse_tree_inorder(y);
 	std::cout << std::endl << std::endl;
 
 	std::cout << "Isomorphic " << is_isomorphic(x, y) << "\n\n";
@@ -40,10 +40,31 @@ int tree_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int fix_bst_node_test(void *data) {
+	tree_node *x = new tree_node(4);
+	x->left = new tree_node(6);
+	x->right = new tree_node(2);
+	x->left->left = new tree_node(1);
+	x->left->right = new tree_node(3);
+	x->right->left = new tree_node(5);
+	x->right->right = new tree_node(7);
+
+	std::cout << "Inorder Access before fixing " << std::endl;
+	tree::traverse_tree_inorder(x);
+	std::cout << std::endl;
+	fix_bst_2_node(x);
+	std::cout << "Inorder Access after fixing " << std::endl;
+	tree::traverse_tree_inorder(x);
+	std::cout << std::endl;
+
+	return TEST_SUCCESS;
+}
+
 const TestFamily* tree_init() {
     TestFamily *testFamily = new TestFamily("trees", static_cast<int>(10));
 
     TEST_DEF(TREE_TEST, tree_test);
+    TEST_DEF(FIX_BST_TEST, fix_bst_node_test);
 
     return testFamily;
 }

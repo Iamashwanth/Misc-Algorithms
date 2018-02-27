@@ -17,16 +17,11 @@ class tree {
 	virtual void delete_elem(int e) = 0;
 	virtual bool search_elem(int e) const = 0;
 	virtual void traverse_tree_inorder() const = 0;
+
+	static void traverse_tree_inorder(tree_node *node);
+
 	virtual ~tree() {};
 };
-
-inline void inorder_print(tree_node *node) {
-	if (!node) return;
-
-	inorder_print(node->left);
-	std::cout << node->elem << " ";
-	inorder_print(node->right);
-}
 
 bool is_bst(tree_node *node, tree_node *min = NULL, tree_node *max = NULL);
 bool is_bst_inorder(tree_node *node);
@@ -36,5 +31,8 @@ void bounary_traversal(tree_node *node);
 tree_node* LCA(tree_node *node, int x, int y);
 int height(tree_node *node, int e);
 int shortest_path(tree_node *node, int x, int y);
+int fix_bst_2_node(tree_node *root);
+void fix_bst_2_node_util(tree_node *cur, tree_node **prev, tree_node **n1,
+			 tree_node **n1p, tree_node **n2);
 
 #endif

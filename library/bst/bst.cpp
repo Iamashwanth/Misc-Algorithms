@@ -99,7 +99,7 @@ void bst::insert_elem(int e) {
 
 void bst::traverse_tree_inorder() const {
 	std::cout << "Inorder Traversal\n";
-	inorder_print(root);
+	tree::traverse_tree_inorder(root);
 	std::cout << "\n";
 }
 
