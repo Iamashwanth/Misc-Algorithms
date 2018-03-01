@@ -38,6 +38,16 @@ int pre_to_bst_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int post_to_bst_test(void *data) {
+	int a[] = {1, 3, 2, 5, 7, 6, 4};
+	bst st;
+
+	st.postorder_to_bst(a, 7);
+	st.traverse_tree_inorder();
+
+	return TEST_SUCCESS;
+}
+
 const TestFamily* bst_init() {
 	TestFamily *testFamily = new TestFamily("bst", static_cast<int>(10));
 
@@ -45,6 +55,7 @@ const TestFamily* bst_init() {
 	TEST_DEF(LCA_TEST, bst_lca_test);
 	TEST_DEF(LL_2_BST_TEST, ll_to_bst_test);
 	TEST_DEF(PRE_2_BST_TEST, pre_to_bst_test);
+	TEST_DEF(POST_2_BST_TEST, post_to_bst_test);
 
 	return testFamily;
 }

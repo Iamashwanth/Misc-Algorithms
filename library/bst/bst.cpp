@@ -151,6 +151,13 @@ void bst::preorder_to_bst(int *a, int n) {
 	root = preorder_to_bst_util(NULL, a, &i, n);
 }
 
+/* Similar to preporder apprach */
+
+void bst::postorder_to_bst(int *a, int n) {
+	int i = n-1;
+	root = postorder_to_bst_util(NULL, a, &i);
+}
+
 /* We pass down the parent node as the max arguemnt to make a switch to the
    right sub-tree whenever an element is greater than the max that is passed */
 
@@ -167,6 +174,19 @@ tree_node* bst::preorder_to_bst_util(tree_node *max, int *a, int *i, int n) {
 	tn->right = preorder_to_bst_util(max, a, i, n);
 
 	return tn;
+}
+
+tree_node* bst::postorder_to_bst_util(tree_node *min, int *a, int *i) {
+	if (*i == -1) return NULL;
+
+	if (min && a[*i] < min->elem) return NULL;
+
+	tree_node *tn = new tree_node(a[*i]);
+
+	(*i)--;
+
+	tn->right = postorder_to_bst_util(tn, a, i);
+	tn->left = postorder_to_bst_util(min, a, i);
 }
 
 tree_node* bst::delete_elem(tree_node *node, int e) {

@@ -11,6 +11,11 @@ void tree::traverse_tree_inorder(tree_node *node) {
 	traverse_tree_inorder(node->right);
 }
 
+/* Here we are trying to simulate recusrive behavior by using a stack.
+   Pushing the left nodes is equivalent to traversing down the left edge.
+   Pop the current node once we hit with a leaf and try to traverse the
+   left edge of the right node. */
+
 void tree::traverse_tree_inorder_i(tree_node *node) {
 	std::vector<tree_node*> s;
 

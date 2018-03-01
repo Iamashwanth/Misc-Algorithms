@@ -25,6 +25,7 @@ class bst : public tree {
 	void delete_elem(int e);
 	int LCA(int x, int y);
 	void preorder_to_bst(int *a, int n);
+	void postorder_to_bst(int *a, int n);
 
 	private:
 	tree_node *root;
@@ -32,6 +33,7 @@ class bst : public tree {
 	void insert_sorted_array(int *a, int i, int j);
 	tree_node* ll_to_bst(node **headp, int n);
 	tree_node* preorder_to_bst_util(tree_node *max, int *a, int *i, int n);
+	tree_node* postorder_to_bst_util(tree_node *min, int *a, int *i);
 	tree_node* delete_elem(tree_node *node, int e);
 	tree_node* LCA(tree_node* node, int x, int y);
 };
