@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 #include "tree.h"
 #include "bst.h"
 
@@ -229,4 +230,48 @@ tree_node* bst::LCA(tree_node* node, int x, int y) {
 	}
 
 	return NULL;
+}
+
+void bst::two_sum(int sum) {
+	std::stack<tree_node*> sf, sr;
+	tree_node *f, *r;
+	f = r = root;
+	int dir = 0;
+
+
+	do {
+		if (dir = 1) {
+			while (f) {
+				sf.push(f);
+				f = f->left;
+			}
+
+			f = sf.top();
+			sf.pop();
+		}
+
+		if (dir = 2) {
+			while (r) {
+				sr.push(r);
+				r = r->right;
+			}
+
+			r = sr.top();
+			sr.pop();
+		}
+
+		if (f->elem + r->elem == sum) {
+			std::cout << f->elem << " " << r->elem << std::endl;
+			return;
+		} else if (f->elem + r->elem > sum) {
+			dir = 2;
+			r = r->left;
+		} else {
+			dir = 1;
+			f = f->right;
+		}
+
+		if (f && r && f->elem > r->elem) return;
+
+	} while (f || r || sf.size() || sr.size());
 }

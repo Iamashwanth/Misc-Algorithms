@@ -48,6 +48,13 @@ int post_to_bst_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int two_sum_bst_test(void *data) {
+	bst st = {1, 2, 4, 0, 7, -4, -2, 3};
+	st.two_sum(10);
+
+	return TEST_SUCCESS;
+}
+
 const TestFamily* bst_init() {
 	TestFamily *testFamily = new TestFamily("bst", static_cast<int>(10));
 
@@ -56,6 +63,7 @@ const TestFamily* bst_init() {
 	TEST_DEF(LL_2_BST_TEST, ll_to_bst_test);
 	TEST_DEF(PRE_2_BST_TEST, pre_to_bst_test);
 	TEST_DEF(POST_2_BST_TEST, post_to_bst_test);
+	TEST_DEF(TWO_SUM_TEST, two_sum_bst_test);
 
 	return testFamily;
 }

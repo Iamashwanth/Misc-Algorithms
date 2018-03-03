@@ -26,6 +26,7 @@ class bst : public tree {
 	int LCA(int x, int y);
 	void preorder_to_bst(int *a, int n);
 	void postorder_to_bst(int *a, int n);
+	void two_sum(int sum);
 
 	private:
 	tree_node *root;
