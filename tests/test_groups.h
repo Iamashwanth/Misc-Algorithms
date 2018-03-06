@@ -6,6 +6,7 @@ extern const TestFamily* bst_init(void);
 extern const TestFamily* list_init(void);
 extern const TestFamily* misc_init(void);
 extern const TestFamily* stack_init(void);
+extern const TestFamily* array_init(void);
 
 typedef const TestFamily* (*InitFunction)(void);
 
@@ -19,6 +20,7 @@ struct TestGroups {
     {.init = list_init},
     {.init = misc_init},
     {.init = stack_init},
+    {.init = array_init},
 };
 
 #endif /* ifndef TESTGROUPS_H */
