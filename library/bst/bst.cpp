@@ -232,6 +232,11 @@ tree_node* bst::LCA(tree_node* node, int x, int y) {
 	return NULL;
 }
 
+/* We can solve this problem similar to how we find the elements the add up to
+   the specified sum in a sorted arrary. Traverse the data structure both in
+   forward and reverse directions and update these pointers based on the current
+   sum. For BST we do this iteratively by using a stack. */
+
 void bst::two_sum(int sum) {
 	std::stack<tree_node*> sf, sr;
 	tree_node *f, *r;
