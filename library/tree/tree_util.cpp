@@ -233,22 +233,17 @@ int find_ndist(tree_node *n, tree_node *tn, int dist, int cur_dist) {
 		l = find_ndist(n->left, tn, dist, 0);
 		r = find_ndist(n->right, tn, dist, 0);
 
+		if (l == dist || r == dist) {
+			std::cout << n->elem << " ";
+			return 0;
+		}
+
 		if (l) {
-			if (l == dist) {
-				std::cout << n->elem << " ";
-				return 0;
-			} else {
-				find_ndist(n->right, tn, dist, l+1);
-				return l+1;
-			}
+			find_ndist(n->right, tn, dist, l+1);
+			return l+1;
 		} else if (r) {
-			if (r == dist) {
-				std::cout << n->elem << " ";
-				return 0;
-			} else {
-				find_ndist(n->left, tn, dist, r+1);
-				return r+1;
-			}
+			find_ndist(n->left, tn, dist, r+1);
+			return r+1;
 		} else {
 			return 0;
 		}
