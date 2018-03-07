@@ -35,5 +35,6 @@ int shortest_path(tree_node *node, int x, int y);
 int fix_bst_2_node(tree_node *root);
 void fix_bst_2_node_util(tree_node *cur, tree_node **prev, tree_node **n1,
 			 tree_node **n1p, tree_node **n2);
+int find_ndist(tree_node *n, tree_node *tn, int dist, int cur_dist = 0);
 
 #endif

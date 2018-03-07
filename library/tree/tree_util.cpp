@@ -214,3 +214,43 @@ int fix_bst_2_node(tree_node *root) {
 		n2->elem = tmp;
 	}
 }
+
+int find_ndist(tree_node *n, tree_node *tn, int dist, int cur_dist) {
+	if (!n) return 0;
+
+	if (dist == cur_dist) {
+		std::cout << n->elem << " ";
+		return 0;
+	}
+
+	if (tn == n || cur_dist) {
+		find_ndist(n->left, tn, dist, cur_dist+1);
+		find_ndist(n->right, tn, dist, cur_dist+1);
+		return tn == n;
+	} else {
+		int l,r;
+
+		l = find_ndist(n->left, tn, dist, 0);
+		r = find_ndist(n->right, tn, dist, 0);
+
+		if (l) {
+			if (l == dist) {
+				std::cout << n->elem << " ";
+				return 0;
+			} else {
+				find_ndist(n->right, tn, dist, l+1);
+				return l+1;
+			}
+		} else if (r) {
+			if (r == dist) {
+				std::cout << n->elem << " ";
+				return 0;
+			} else {
+				find_ndist(n->left, tn, dist, r+1);
+				return r+1;
+			}
+		} else {
+			return 0;
+		}
+	}
+}
