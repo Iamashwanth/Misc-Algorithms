@@ -1,4 +1,5 @@
 #include <iostream>
+#include <tuple>
 #include "test_framework.h"
 #include "dp.h"
 
@@ -15,11 +16,22 @@ int knapsack_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int matrix_chain_mul_test(void *data) {
+	std::vector<std::tuple<int, int>> v;
+	v.push_back(std::make_tuple(10, 20));
+	v.push_back(std::make_tuple(20, 30));
+	v.push_back(std::make_tuple(30, 40));
+	v.push_back(std::make_tuple(40, 30));
+	std::cout << matrix_chain_mul(v) << std::endl;
+	return TEST_SUCCESS;
+}
+
 const TestFamily* dp_init() {
     TestFamily *testFamily = new TestFamily("DP", static_cast<int>(10));
 
     TEST_DEF(THREE_SUM_TEST, three_sum_test);
     TEST_DEF(KNAPSACK_TEST, knapsack_test);
+    TEST_DEF(MATRIX_CHAIN_MUL_TEST, matrix_chain_mul_test);
 
     return testFamily;
 }
