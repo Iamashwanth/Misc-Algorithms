@@ -32,12 +32,18 @@ int subnet_sum_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int fib_sum_dp_test(void *data) {
+	std::cout << fib_sum_dp_r(17) << std::endl;
+	return TEST_SUCCESS;
+}
+
 const TestFamily* dp_init() {
     TestFamily *testFamily = new TestFamily("DP", static_cast<int>(10));
 
     TEST_DEF(THREE_SUM_TEST, three_sum_test);
     TEST_DEF(KNAPSACK_TEST, knapsack_test);
     TEST_DEF(MATRIX_CHAIN_MUL_TEST, matrix_chain_mul_test);
+    TEST_DEF(FIB_SUM_DP_TEST, fib_sum_dp_test);
     TEST_DEF(SUBNET_SUM_TEST, subnet_sum_test);
 
     return testFamily;

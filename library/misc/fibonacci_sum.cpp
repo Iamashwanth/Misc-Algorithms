@@ -5,7 +5,6 @@
 */
 
 #include "misc.h"
-#include <vector>
 
 using namespace std;
 
