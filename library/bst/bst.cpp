@@ -280,3 +280,25 @@ void bst::two_sum(int sum) {
 
 	} while (f || r || sf.size() || sr.size());
 }
+
+void bst::greater_sum() {
+	std::stack<tree_node*> s;
+	tree_node *tmp = root;
+	int sum = 0, ts = 0;
+
+	while (s.size() || tmp) {
+		while (tmp) {
+			s.push(tmp);
+			tmp = tmp->right;
+		}
+
+		tmp = s.top();
+		s.pop();
+
+		ts = sum + tmp->elem;
+		tmp->elem = sum;
+		sum = ts;
+
+		tmp = tmp->left;
+	}
+}

@@ -24,6 +24,25 @@ int rotate_min_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int rotate_elem_test(void *data) {
+	std::vector<int> input = {5, 6, 1, 2, 3, 4};
+	std::cout << "index of 6 is " << find_elem_rotated(input, 6) << std::endl;
+	return TEST_SUCCESS;
+}
+
+int binary_search_test(void *data) {
+	std::vector<int> input = {1, 2, 3, 4, 5, 6, 7};
+	std::cout << "Index of 4 is " << binary_search(input, 4, 0,\
+			input.size()-1) << std::endl;
+	return TEST_SUCCESS;
+}
+
+int palindrome_chunks_test(void *data) {
+	std::string str = "ghiabcdefhelloadamhelloabcdefghi";
+	std::cout << "count is " << palindrome_chunks(str) << std::endl;
+	return TEST_SUCCESS;
+}
+
 const TestFamily* array_init() {
     TestFamily *testFamily = new TestFamily("ARRAYS", static_cast<int>(10));
 
@@ -31,6 +50,9 @@ const TestFamily* array_init() {
     TEST_DEF(NEXT_GREATEST_TEST, next_greatest_test);
     TEST_DEF(HISTOGRAM_AREA_TEST, histogram_area_test);
     TEST_DEF(ROTATE_MIN_TEST, rotate_min_test);
+    TEST_DEF(BINARY_SEARCH_TEST, binary_search_test);
+    TEST_DEF(ROTATE_ELEM_TEST, rotate_elem_test);
+    TEST_DEF(PALINDROME_CHUNKS_TEST, palindrome_chunks_test);
 
     return testFamily;
 }

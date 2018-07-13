@@ -27,6 +27,7 @@ class bst : public tree {
 	void preorder_to_bst(int *a, int n);
 	void postorder_to_bst(int *a, int n);
 	void two_sum(int sum);
+	void greater_sum();
 
 	private:
 	tree_node *root;
