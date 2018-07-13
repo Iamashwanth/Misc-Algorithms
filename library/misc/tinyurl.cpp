@@ -1,16 +1,15 @@
-/* By sssuming the character in the url are limited to alphanumberice, tinurl
+/* By assuming the character in the url are limited to alphanumberic, tinyurl
  * problem turns into a base converrsion problem */
 
 #include <iostream>
-#include <string>
 #include <climits>
 
 std::string alphanum = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-uint ato10(std::string &s) {
-	uint num = 0;
-	uint base = alphanum.size();
-	uint add;
+unsigned int ato10(std::string &s) {
+	unsigned int num = 0;
+	unsigned int base = alphanum.size();
+	unsigned int add;
 	std::cout << base << std::endl;
 
 	for(int i = 0; i < s.size(); i++) {
@@ -30,7 +29,7 @@ uint ato10(std::string &s) {
 	return num;
 }
 
-void b10toa(uint num, std::string &s) {
+void b10toa(unsigned int num, std::string &s) {
 	while (num) {
 		s.insert(0, 1, alphanum[num%62]);
 		num /= 62;
