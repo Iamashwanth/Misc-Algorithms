@@ -10,5 +10,6 @@ void knapsack(std::vector<int> &w, std::vector<int> &v, int weight);
 int matrix_chain_mul(std::vector<std::tuple<int, int>> &m);
 void subset_sum(std::vector<int> &v, int target);
 int fib_sum_dp_r(int k);
+int fib_sum_dp_i(int k);
 
 #endif

@@ -55,3 +55,48 @@ int fib_sum_dp_r(int k) {
 
 	return fib_sum_dp_r_int(fib, tbl, fib.size()-1, k);
 }
+
+#define AT(A, x, y) ((x < 0 || y < 0) ? -1 : A[x][y]);
+
+int fib_sum_dp_i(int k) {
+	vector<int> fib;
+	vector<vector<int>> tbl(k+1);
+	int r1, r2;
+
+	generate_fib(fib, k);
+	fib.erase(fib.begin());
+
+	for(int i=0; i<=k; i++) {
+		tbl[i].reserve(fib.size());
+		for(int j=0; j<fib.size(); j++) {
+			if (!i)
+				tbl[i][j] = 0;
+			else
+				tbl[i][j] = -1;
+		}
+	}
+
+	for(int i=1; i<=k; i++) {
+		for(int j=0; j<fib.size(); j++) {
+			r1 = AT(tbl, i-fib[j], j);
+			r2 = AT(tbl, i, j-1);
+
+			if (r1 != -1 && r2 != -1) {
+				tbl[i][j] = min(r1+1, r2);
+			} else if (r1 == -1 || r2 == -1) {
+				tbl[i][j] = (r1 != -1 ? r1 + 1 : r2);
+			} else {
+				tbl[i][j] = -1;
+			}
+		}
+	}
+
+	for(int i=0; i<=k; i++) {
+		for(int j=0; j<fib.size(); j++) {
+			std::cout << tbl[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+
+	return tbl[k][fib.size()-1];
+}

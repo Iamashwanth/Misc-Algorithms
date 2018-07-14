@@ -34,6 +34,7 @@ int subnet_sum_test(void *data) {
 
 int fib_sum_dp_test(void *data) {
 	std::cout << fib_sum_dp_r(17) << std::endl;
+	std::cout << fib_sum_dp_i(4) << std::endl;
 	return TEST_SUCCESS;
 }
 
