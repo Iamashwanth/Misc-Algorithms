@@ -53,6 +53,21 @@ int sort3_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int quick_sort_test(void *data) {
+	std::vector<int> v = {4, 2, 5, 1, 3};
+	quick_sort(v, 0, v.size()-1);
+	for (auto e:v) {
+		std::cout << e;
+	}
+	std::cout << std::endl;
+}
+
+int rain_trapping_test(void *data) {
+	std::vector<int> v = {3, 0, 0, 2, 0, 4};
+	std::cout << rain_trapping(v) << std::endl;
+	return TEST_SUCCESS;
+}
+
 const TestFamily* array_init() {
     TestFamily *testFamily = new TestFamily("ARRAYS", static_cast<int>(10));
 
@@ -64,6 +79,8 @@ const TestFamily* array_init() {
     TEST_DEF(ROTATE_ELEM_TEST, rotate_elem_test);
     TEST_DEF(PALINDROME_CHUNKS_TEST, palindrome_chunks_test);
     TEST_DEF(SORT3_TEST, sort3_test);
+    TEST_DEF(QUICK_SORT_TEST, quick_sort_test);
+    TEST_DEF(RAIN_TRAPPING_TEST, rain_trapping_test);
 
     return testFamily;
 }
