@@ -11,5 +11,6 @@ int rotate_min(std::vector<int> &v);
 int binary_search(std::vector<int> &v, int elem, int low, int high);
 int find_elem_rotated(std::vector<int> &v, int elem);
 int palindrome_chunks(const std::string &str);
+void sort3(std::vector<int> &v);
 
 #endif

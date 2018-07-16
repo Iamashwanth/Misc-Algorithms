@@ -43,6 +43,16 @@ int palindrome_chunks_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int sort3_test(void *data) {
+	std::vector<int> v = {0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1};
+	sort3(v);
+	for (auto e:v) {
+		std::cout << e;
+	}
+	std::cout << std::endl;
+	return TEST_SUCCESS;
+}
+
 const TestFamily* array_init() {
     TestFamily *testFamily = new TestFamily("ARRAYS", static_cast<int>(10));
 
@@ -53,6 +63,7 @@ const TestFamily* array_init() {
     TEST_DEF(BINARY_SEARCH_TEST, binary_search_test);
     TEST_DEF(ROTATE_ELEM_TEST, rotate_elem_test);
     TEST_DEF(PALINDROME_CHUNKS_TEST, palindrome_chunks_test);
+    TEST_DEF(SORT3_TEST, sort3_test);
 
     return testFamily;
 }
