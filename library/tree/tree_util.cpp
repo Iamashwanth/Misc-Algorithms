@@ -1,6 +1,8 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <queue>
+#include <tuple>
 #include "tree.h"
 
 void tree::traverse_tree_inorder(tree_node *node) {
@@ -248,4 +250,32 @@ int find_ndist(tree_node *n, tree_node *tn, int dist, int cur_dist) {
 			return 0;
 		}
 	}
+}
+
+void print_right_view(tree_node *root) {
+	std::queue<std::tuple<tree_node*, int>> q;
+	std::vector<tree_node*> v;
+	tree_node *n;
+	int lvl;
+
+	q.push(std::make_tuple(root, 0));
+
+	while(!q.empty()) {
+		std::tie(n, lvl) = q.front();
+		q.pop();
+
+		if (!n) continue;
+
+		if (v.size() != lvl +1) v.resize(lvl+1);
+		v[lvl] = n;
+
+		q.push(std::make_tuple(n->left, lvl+1));
+		q.push(std::make_tuple(n->right, lvl+1));
+	}
+
+	for (auto e:v) {
+		std::cout << e->elem << " ";
+	}
+
+	std::cout << std::endl;
 }
