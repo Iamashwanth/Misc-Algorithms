@@ -68,6 +68,18 @@ int rain_trapping_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int max_profit_single_test(void *data) {
+	std::vector<int> v = {1, 2, 6, 80, 100};
+	std::cout << "Max profit: " << maximize_profit_single(v) << std::endl;
+	return TEST_SUCCESS;
+}
+
+int max_profit_multiple_test(void *data) {
+	std::vector<int> v = {100, 180, 260, 310, 40, 535, 695};
+	std::cout << "Max profit: " << maximize_profit_multiple(v) << std::endl;
+	return TEST_SUCCESS;
+}
+
 const TestFamily* array_init() {
     TestFamily *testFamily = new TestFamily("ARRAYS", static_cast<int>(10));
 
@@ -81,6 +93,8 @@ const TestFamily* array_init() {
     TEST_DEF(SORT3_TEST, sort3_test);
     TEST_DEF(QUICK_SORT_TEST, quick_sort_test);
     TEST_DEF(RAIN_TRAPPING_TEST, rain_trapping_test);
+    TEST_DEF(MAX_PROFIT_SINGLE_TEST, max_profit_single_test);
+    TEST_DEF(MAX_PROFIT_MULTIPLE_TEST, max_profit_multiple_test);
 
     return testFamily;
 }

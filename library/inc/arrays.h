@@ -15,5 +15,7 @@ void sort3(std::vector<int> &v);
 void quick_sort(std::vector<int> &v, int low, int high);
 void swap(std::vector<int> &A, int i, int j);
 int rain_trapping(std::vector<int> &v);
+int maximize_profit_single(std::vector<int> &v);
+int maximize_profit_multiple(std::vector<int> &v);
 
 #endif
