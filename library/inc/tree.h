@@ -37,5 +37,6 @@ void fix_bst_2_node_util(tree_node *cur, tree_node **prev, tree_node **n1,
 			 tree_node **n1p, tree_node **n2);
 int find_ndist(tree_node *n, tree_node *tn, int dist, int cur_dist = 0);
 void print_right_view(tree_node *root);
+int diameter(tree_node *root, int &h);
 
 #endif

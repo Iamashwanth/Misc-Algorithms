@@ -106,6 +106,21 @@ int print_right_view_test(void *data) {
 	return TEST_SUCCESS;
 }
 
+int diameter_test(void *data) {
+	int h;
+	tree_node *x = new tree_node(1);
+	x->left = new tree_node(2);
+	x->right = new tree_node(3);
+	x->left->left = new tree_node(4);
+	x->left->right = new tree_node(5);
+	x->right->left = new tree_node(6);
+	x->left->right->left = new tree_node(7);
+	x->left->right->right = new tree_node(8);
+
+	std::cout << "Diameter :" << diameter(x, h) << std::endl;
+	return TEST_SUCCESS;
+}
+
 const TestFamily* tree_init() {
     TestFamily *testFamily = new TestFamily("trees", static_cast<int>(10));
 
@@ -114,6 +129,7 @@ const TestFamily* tree_init() {
     TEST_DEF(INORDER_ITR_TEST, inorder_itr_test);
     TEST_DEF(FIND_NDIST_TEST, find_ndist_test);
     TEST_DEF(PRINT_RIGHT_VIEW_TEST, print_right_view_test);
+    TEST_DEF(DIAMETER_TEST, diameter_test);
 
     return testFamily;
 }

@@ -279,3 +279,19 @@ void print_right_view(tree_node *root) {
 
 	std::cout << std::endl;
 }
+
+int diameter(tree_node* root, int &h) {
+	int ld,rd;
+	int lh, rh;
+	if (!root) {
+		h = 0;
+		return 0;
+	}
+
+	ld = diameter(root->left, lh);
+	rd = diameter(root->right, rh);
+
+	h = std::max(lh, rh) + 1;
+
+	return std::max(std::max(ld, rd), lh + rh + 1);
+}
